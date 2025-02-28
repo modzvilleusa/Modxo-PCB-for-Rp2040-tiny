@@ -1,7 +1,9 @@
 <h1>Modxo Carrier board for use with Waveshare rp2040-tiny or rp2040-zero</h1>
 Download the latest Gerbers and BOM from the releases page.
 
-![IMG_1253](https://github.com/user-attachments/assets/f37602a9-f79a-43a2-96df-271a5d4a3954)
+![Screenshot_3](https://github.com/user-attachments/assets/f6cd644e-5291-44d5-9a10-b467c80b790d)
+
+<h1>Firmware</h1>
 
 <p>The board has been updated to use the latest Modxo 1.0 or PrometheOS firmware.</p>
 
@@ -10,6 +12,16 @@ https://github.com/Team-Resurgent/Modxo/releases/tag/latest
 <p>For flashing the firmware, check section 3. Flashing Firmware here</p>
 
 https://github.com/Team-Resurgent/Modxo
+
+<p>I recommend getting the latest build of prometheos from pandora/xbins here</p>
+
+https://github.com/Team-Resurgent/Pandora/releases/tag/V1.0.7
+
+<p>You can find it under Xbox/Console Based Applications/bios/PrometheOS/ Use the Modxo uf2 for rp2040-zero / tiny </p>
+
+Here's a video of how to use Pandora by MrMario2011
+
+https://www.youtube.com/watch?v=Uk_AdbIqSWE&t=1s
 
 <h1>Assembly</h1>
 In order to use the RGB led output, You will need to run a wire from the bottom right pad of the RGB led to the RGB pad on the PCB like so.
@@ -32,9 +44,28 @@ In order to use the RGB led output, You will need to run a wire from the bottom 
 <h1>Installation (1.6)</h1>
 
 <p>For 1.6 you will need to do an LPC rebuild along with lframe rebuild like you would for an Open Xenium install. 
-The lpc rebuild should be like this. Credit to reddit user u/strictlyfocused02 for this image of very clean lpc rebuild wiring.</p>
+The lpc rebuild should be like this.
+Try with the Lframe rebuilt method first. If it gives you issues booting try the lframe grounded install. 
+With lframe grounded you won't be able to boot the stock bios unless you flash the stock bios to the Modxo.</p>
 
-![lpc_rebuild_strictlyfocused02](https://github.com/user-attachments/assets/77a8541e-2900-4f08-bd49-cae636353577)
+With Lframe rebuilt
+![FF586098-C050-4E43-8B7D-17D598F497E0](https://github.com/user-attachments/assets/228ba1be-fea1-4963-a583-0f95e122f3d8)
+
+With Lframe Grounded 
+![2BC9E43C-2028-46A6-ADC2-11434AEFD480](https://github.com/user-attachments/assets/51e14cf8-0c9d-4583-9b30-3b4ebff9d4dd)
+
+<h1>V3 board install (1.6)</h1>
+<p></p>The V3 can be identified by having the hole in the center for easier rp2040 zero installs, extra xb i2c port up top, and power switch ic that shuts off 5v from the lpc when 3v3 isn't active (shout out Ack Ack on the XS discord for sharing the idea)</p>
+
+![Screenshot_3](https://github.com/user-attachments/assets/9a9d6244-c199-426d-ae88-92d9a2aba52d)
+<p>To install this revision</p>
+<p>-install the pinheader</p>
+<p>-Do an lpc rebuild using one of the above photos or using an lpc rebuild qsb.</p>
+<p>-plug in the Modxo.</p>
+<p>If you have issues booting try grounding Lframe instead of rebuilding it (Second LPC rebuild photo)</p>
+
+
+<h1>V2 board install (1.6)</h1>
 
 <p>1.6 is unique in that the 5v line of the LPC is always active when the console is plugged in. This is no good since the lcd and rgb lighting both run off of 5v. 
 Therefore we need to remove the 5v pin from the pinheader and pull 5v from elsewhere.</p> 
@@ -50,13 +81,15 @@ Now wire the other end the to 5v input pad on the adapter board here.
 
 ![IMG_1251](https://github.com/user-attachments/assets/e80fc9ff-ca87-4dbd-a544-610b6278208e)
 
+**NOTE - Some people have reported  stability issues using the external 5v source. 
+Hopefully this can be addressed in the software at some point. For better support for 1.6 consoles, use the V3 adapter.
+If you purchased a V2 from my shop and would like to exchange it for a V3, Send an email with your order number to modzvilleusa@proton.me and I'll swap it out for you.**
+
 <h1>LCD support.</h1> 
 
-**PLEASE NOTE!** - The current public release (at the time of writing 1.4.0) of PrometheOS does not have support for LCD or RGB led output. I've tested a private build in which it is indeed working. However if you're interested in building these specifically for those features, I'd recommend waiting until they're added to the public release of PrometheOS. 
+**PLEASE NOTE!** - The current public release (at the time of writing 1.5.0) of PrometheOS Supports LCDs over i2c, smbus or with a spi2par adapter using modified code for Modxo. 
 
-<p>For an lcd you will need to use a spi2par adapter similar to OpenXenmium. 
-The spi2par code has been tweaked for modxo, you will want to flash the spi2par firmware from here and follow the wiring diagram. 
-I will be making a custom spi2par board soon that uses the same connectors as this modxo board to make the install easier.</p>
+<p>I will be updating this section with a proper guide soon.</p>
 
 https://github.com/Team-Resurgent/ModxoLegacyLCD/blob/main/ArdruinoProMicro/README.md
 
@@ -79,13 +112,32 @@ If you would like to design an add on board, please keep this as a standard.
 
 ![RGB_pinout](https://github.com/user-attachments/assets/8cd43ad6-99b2-4169-82a5-e4a21057de6a)
 
-**I2C pinout**
-
+**I2C pinout V2** 
+The V2 uses 3.3v for the power source. 
 ![i2c pinouts](https://github.com/user-attachments/assets/8b594de7-c147-44b5-b538-1f9f15cf9374)
+
+**I2C pinout V3**
+On the V3 changed to 5v on both of the i2c connectors. 
+
+![Screenshot_2](https://github.com/user-attachments/assets/4213d602-086b-42dc-844c-78ed21b4d74e)
+
+![Screenshot_4](https://github.com/user-attachments/assets/c7db8b43-8653-4c1b-ad5f-078ddd10be3e)
+
+<h1>Early V3 Silkscreen issues</h1>
+<p>The first small run of the v3 adapters sold on my shop have a couple of blunders with the silkscreen. </p>
+
+![OXHD MISPRINT](https://github.com/user-attachments/assets/d24528b4-1931-4675-a2f1-2c2f9b0d71e6)
+
+The second i2c port is labeled OXHD. This is due to a miscomunication. I was under the impression that the OXHD would tap into I2C, I was mistaken. 
+I've opted to keep the second i2c port as I believe it will come in handy down the line. 
+These revisions also have the polaritory of the 0603 led reversed on the silkscreen. Since these only exist already manufactured, it shouldn't be an issue for anyone but figured it's worth a mention. 
+
+
+
 
 <h1>Preassembled adapters</h1>
 
-If you'd like to get one of these adapters prebuild (minus the rp2040-tiny) you can grab one from my shop here
+If you'd like to get one of these adapters prebuilt you can grab one from my shop here
 
 https://modzvilleusa.com/products/xbox-modxo-adapter-for-rp2040-tiny
 
